@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#6366f1">
+<meta name="author" content="AL-AMIN">
+<title>NXT ARCADE — AL-AMIN's Game Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══ SPLASH ═══ -->
+<div id="splash">
+  <div class="splash-content">
+    <div class="splash-logo">🎮</div>
+    <div class="splash-title" id="splashTitle"></div>
+    <div class="splash-sub">GAMING PLATFORM v1.0</div>
+    <div class="splash-player">Player: AL-AMIN</div>
+    <div class="boot-progress"><div class="boot-bar" id="bootBar"></div></div>
+    <div class="boot-text" id="bootText">LOADING...</div>
+  </div>
+</div>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-inner">
+    <button class="brand" onclick="goHome()">
+      <div class="brand-logo">🎮</div>
+      <div class="brand-text">
+        <span class="brand-name">NXT ARCADE</span>
+        <span class="brand-tag">Gaming Platform</span>
+      </div>
+    </button>
+
+    <div class="header-search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search games..." id="searchInput" oninput="searchGames(this.value)">
+    </div>
+
+    <div class="header-actions">
+      <button class="icon-btn" onclick="showStats()" title="Stats">
+        <i class="fas fa-chart-bar"></i>
+      </button>
+      <button class="icon-btn" onclick="toggleTheme()" title="Theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+      <button class="profile-btn">
+        <div class="profile-avatar">A</div>
+        <span class="profile-name">AL-AMIN</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ MAIN ═══ -->
+<main>
+
+  <!-- HOME SCREEN -->
+  <div class="home" id="homeScreen">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">🔥 FEATURED</div>
+        <div class="hero-title">NXT ARCADE</div>
+        <div class="hero-sub">10 Games · 5 Categories · Single Player</div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="heroTotalGames">10</div>
+            <div class="hero-stat-label">Games</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="heroTotalScore">0</div>
+            <div class="hero-stat-label">Total Score</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="heroPlaytime">0m</div>
+            <div class="hero-stat-label">Playtime</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-emoji">🎮</div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="section-header">
+      <h2>📂 Categories</h2>
+    </div>
+    <div class="categories">
+      <button class="cat-btn active" data-cat="all" onclick="filterCat('all')">
+        <div class="cat-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6)">🎯</div>
+        <span>All</span>
+      </button>
+      <button class="cat-btn" data-cat="arcade" onclick="filterCat('arcade')">
+        <div class="cat-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444)">🕹️</div>
+        <span>Arcade</span>
+      </button>
+      <button class="cat-btn" data-cat="racing" onclick="filterCat('racing')">
+        <div class="cat-icon" style="background: linear-gradient(135deg, #ec4899, #f43f5e)">🏎️</div>
+        <span>Racing</span>
+      </button>
+      <button class="cat-btn" data-cat="puzzle" onclick="filterCat('puzzle')">
+        <div class="cat-icon" style="background: linear-gradient(135deg, #06b6d4, #3b82f6)">🧩</div>
+        <span>Puzzle</span>
+      </button>
+      <button class="cat-btn" data-cat="board" onclick="filterCat('board')">
+        <div class="cat-icon" style="background: linear-gradient(135deg, #10b981, #059669)">♟️</div>
+        <span>Board</span>
+      </button>
+      <button class="cat-btn" data-cat="action" onclick="filterCat('action')">
+        <div class="cat-icon" style="background: linear-gradient(135deg, #a855f7, #ec4899)">⚡</div>
+        <span>Action</span>
+      </button>
+    </div>
+
+    <!-- FEATURED SCROLL -->
+    <div class="section-header">
+      <h2>🔥 Featured</h2>
+      <button class="see-all" onclick="filterCat('all')">See All →</button>
+    </div>
+    <div class="featured-scroll" id="featuredScroll"></div>
+
+    <!-- ALL GAMES -->
+    <div class="section-header">
+      <h2>🎮 All Games</h2>
+      <span class="game-count" id="gameCount">10 games</span>
+    </div>
+    <div class="game-grid" id="gameGrid"></div>
+
+    <!-- LEADERBOARD -->
+    <div class="section-header">
+      <h2>🏆 Top Scores</h2>
+    </div>
+    <div class="leaderboard">
+      <div class="lb-list" id="leaderboard"></div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════ GAME SCREENS ═══════════ -->
+
+  <!-- SNAKE -->
+  <div class="game-screen" id="game-snake">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">🐍</span><span>SNAKE</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span class="stat-value" id="snake-score">0</span></div>
+        <div class="stat-box"><span class="stat-label">BEST</span><span class="stat-value" id="snake-best">0</span></div>
+      </div>
+    </div>
+    <div class="game-canvas-wrap">
+      <canvas id="snakeCanvas" width="400" height="400"></canvas>
+      <div class="game-overlay" id="snakeOverlay">
+        <div class="overlay-content">
+          <div class="overlay-title">GAME OVER</div>
+          <div class="overlay-score">Score: <b id="snakeFinalScore">0</b></div>
+          <button class="overlay-btn" onclick="snakeRestart()"><i class="fas fa-redo"></i> PLAY AGAIN</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn" onclick="snakeTogglePause()"><i class="fas fa-pause"></i> Pause</button>
+      <button class="ctrl-btn" onclick="snakeRestart()"><i class="fas fa-redo"></i> Restart</button>
+    </div>
+    <div class="mobile-dpad">
+      <button class="dpad-btn up" onclick="snakeTurn('up')"><i class="fas fa-chevron-up"></i></button>
+      <div class="dpad-row">
+        <button class="dpad-btn left" onclick="snakeTurn('left')"><i class="fas fa-chevron-left"></i></button>
+        <button class="dpad-btn right" onclick="snakeTurn('right')"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <button class="dpad-btn down" onclick="snakeTurn('down')"><i class="fas fa-chevron-down"></i></button>
+    </div>
+  </div>
+
+  <!-- RACER -->
+  <div class="game-screen" id="game-racer">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">🏎️</span><span>ENDLESS RACER</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span class="stat-value" id="racer-score">0</span></div>
+        <div class="stat-box"><span class="stat-label">SPEED</span><span class="stat-value" id="racer-speed">0</span></div>
+      </div>
+    </div>
+    <div class="game-canvas-wrap">
+      <canvas id="racerCanvas" width="400" height="500"></canvas>
+      <div class="game-overlay" id="racerOverlay">
+        <div class="overlay-content">
+          <div class="overlay-title">CRASHED!</div>
+          <div class="overlay-score">Score: <b id="racerFinalScore">0</b></div>
+          <button class="overlay-btn" onclick="racerRestart()"><i class="fas fa-redo"></i> TRY AGAIN</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn" onclick="racerTogglePause()"><i class="fas fa-pause"></i> Pause</button>
+      <button class="ctrl-btn" onclick="racerRestart()"><i class="fas fa-redo"></i> Restart</button>
+    </div>
+    <div class="mobile-dpad-row">
+      <button class="dpad-btn big" onclick="racerMove('left')"><i class="fas fa-chevron-left"></i></button>
+      <button class="dpad-btn big" onclick="racerMove('right')"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <!-- TIC TAC TOE -->
+  <div class="game-screen" id="game-ttt">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">🎯</span><span>TIC TAC TOE</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">WINS</span><span class="stat-value" id="ttt-wins">0</span></div>
+        <div class="stat-box"><span class="stat-label">LOSSES</span><span class="stat-value" id="ttt-losses">0</span></div>
+      </div>
+    </div>
+    <div class="ttt-wrap">
+      <div class="ttt-status" id="tttStatus">Your Turn (X)</div>
+      <div class="ttt-board" id="tttBoard">
+        <div class="ttt-cell" data-cell="0" onclick="tttPlay(0)"></div>
+        <div class="ttt-cell" data-cell="1" onclick="tttPlay(1)"></div>
+        <div class="ttt-cell" data-cell="2" onclick="tttPlay(2)"></div>
+        <div class="ttt-cell" data-cell="3" onclick="tttPlay(3)"></div>
+        <div class="ttt-cell" data-cell="4" onclick="tttPlay(4)"></div>
+        <div class="ttt-cell" data-cell="5" onclick="tttPlay(5)"></div>
+        <div class="ttt-cell" data-cell="6" onclick="tttPlay(6)"></div>
+        <div class="ttt-cell" data-cell="7" onclick="tttPlay(7)"></div>
+        <div class="ttt-cell" data-cell="8" onclick="tttPlay(8)"></div>
+      </div>
+      <div class="ttt-difficulty">
+        <button class="diff-btn" data-diff="easy" onclick="tttSetDiff('easy')">Easy</button>
+        <button class="diff-btn active" data-diff="hard" onclick="tttSetDiff('hard')">Hard</button>
+      </div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn big" onclick="tttRestart()"><i class="fas fa-redo"></i> New Game</button>
+    </div>
+  </div>
+
+  <!-- 2048 -->
+  <div class="game-screen" id="game-2048">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">🔢</span><span>2048</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span class="stat-value" id="g2048-score">0</span></div>
+        <div class="stat-box"><span class="stat-label">BEST</span><span class="stat-value" id="g2048-best">0</span></div>
+      </div>
+    </div>
+    <div class="g2048-wrap">
+      <div class="g2048-grid" id="g2048Grid"></div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn" onclick="g2048Restart()"><i class="fas fa-redo"></i> Restart</button>
+    </div>
+    <div class="mobile-dpad">
+      <button class="dpad-btn up" onclick="g2048Move('up')"><i class="fas fa-chevron-up"></i></button>
+      <div class="dpad-row">
+        <button class="dpad-btn left" onclick="g2048Move('left')"><i class="fas fa-chevron-left"></i></button>
+        <button class="dpad-btn right" onclick="g2048Move('right')"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <button class="dpad-btn down" onclick="g2048Move('down')"><i class="fas fa-chevron-down"></i></button>
+    </div>
+  </div>
+
+  <!-- FLAPPY -->
+  <div class="game-screen" id="game-flappy">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">🐦</span><span>FLAPPY BIRD</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span class="stat-value" id="flappy-score">0</span></div>
+        <div class="stat-box"><span class="stat-label">BEST</span><span class="stat-value" id="flappy-best">0</span></div>
+      </div>
+    </div>
+    <div class="game-canvas-wrap">
+      <canvas id="flappyCanvas" width="400" height="500"></canvas>
+      <div class="game-overlay" id="flappyOverlay">
+        <div class="overlay-content">
+          <div class="overlay-title">GAME OVER</div>
+          <div class="overlay-score">Score: <b id="flappyFinalScore">0</b></div>
+          <button class="overlay-btn" onclick="flappyRestart()"><i class="fas fa-redo"></i> PLAY AGAIN</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn big tap-btn" onclick="flappyJump()"><i class="fas fa-arrow-up"></i> TAP TO FLAP</button>
+      <button class="ctrl-btn" onclick="flappyRestart()"><i class="fas fa-redo"></i> Restart</button>
+    </div>
+  </div>
+
+  <!-- MEMORY -->
+  <div class="game-screen" id="game-memory">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">🧠</span><span>MEMORY</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">MOVES</span><span class="stat-value" id="memory-moves">0</span></div>
+        <div class="stat-box"><span class="stat-label">TIME</span><span class="stat-value" id="memory-time">0s</span></div>
+      </div>
+    </div>
+    <div class="memory-wrap">
+      <div class="memory-grid" id="memoryGrid"></div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn big" onclick="memoryRestart()"><i class="fas fa-redo"></i> New Game</button>
+    </div>
+  </div>
+
+  <!-- PONG -->
+  <div class="game-screen" id="game-pong">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">🏓</span><span>PONG</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">YOU</span><span class="stat-value" id="pong-player">0</span></div>
+        <div class="stat-box"><span class="stat-label">CPU</span><span class="stat-value" id="pong-cpu">0</span></div>
+      </div>
+    </div>
+    <div class="game-canvas-wrap">
+      <canvas id="pongCanvas" width="400" height="500"></canvas>
+      <div class="game-overlay" id="pongOverlay">
+        <div class="overlay-content">
+          <div class="overlay-title" id="pongResult">YOU WIN!</div>
+          <button class="overlay-btn" onclick="pongRestart()"><i class="fas fa-redo"></i> PLAY AGAIN</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn" onclick="pongRestart()"><i class="fas fa-redo"></i> Restart</button>
+    </div>
+    <div class="mobile-dpad-row">
+      <button class="dpad-btn big" onclick="pongMove('up')"><i class="fas fa-chevron-up"></i></button>
+      <button class="dpad-btn big" onclick="pongMove('down')"><i class="fas fa-chevron-down"></i></button>
+    </div>
+  </div>
+
+  <!-- TETRIS -->
+  <div class="game-screen" id="game-tetris">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">🧱</span><span>TETRIS</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span class="stat-value" id="tetris-score">0</span></div>
+        <div class="stat-box"><span class="stat-label">LINES</span><span class="stat-value" id="tetris-lines">0</span></div>
+      </div>
+    </div>
+    <div class="tetris-wrap">
+      <canvas id="tetrisCanvas" width="300" height="600"></canvas>
+      <div class="tetris-side">
+        <div class="tetris-next-label">NEXT</div>
+        <canvas id="tetrisNext" width="120" height="120"></canvas>
+      </div>
+      <div class="game-overlay" id="tetrisOverlay">
+        <div class="overlay-content">
+          <div class="overlay-title">GAME OVER</div>
+          <div class="overlay-score">Score: <b id="tetrisFinalScore">0</b></div>
+          <button class="overlay-btn" onclick="tetrisRestart()"><i class="fas fa-redo"></i> PLAY AGAIN</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn" onclick="tetrisMove('left')"><i class="fas fa-arrow-left"></i></button>
+      <button class="ctrl-btn" onclick="tetrisRotate()"><i class="fas fa-rotate-right"></i></button>
+      <button class="ctrl-btn" onclick="tetrisMove('right')"><i class="fas fa-arrow-right"></i></button>
+      <button class="ctrl-btn" onclick="tetrisMove('down')"><i class="fas fa-arrow-down"></i></button>
+    </div>
+  </div>
+
+  <!-- BREAKOUT -->
+  <div class="game-screen" id="game-breakout">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">🎯</span><span>BREAKOUT</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span class="stat-value" id="breakout-score">0</span></div>
+        <div class="stat-box"><span class="stat-label">LIVES</span><span class="stat-value" id="breakout-lives">3</span></div>
+      </div>
+    </div>
+    <div class="game-canvas-wrap">
+      <canvas id="breakoutCanvas" width="400" height="500"></canvas>
+      <div class="game-overlay" id="breakoutOverlay">
+        <div class="overlay-content">
+          <div class="overlay-title" id="breakoutResult">GAME OVER</div>
+          <div class="overlay-score">Score: <b id="breakoutFinalScore">0</b></div>
+          <button class="overlay-btn" onclick="breakoutRestart()"><i class="fas fa-redo"></i> PLAY AGAIN</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn" onclick="breakoutRestart()"><i class="fas fa-redo"></i> Restart</button>
+    </div>
+    <div class="mobile-dpad-row">
+      <button class="dpad-btn big" onclick="breakoutMove('left')"><i class="fas fa-chevron-left"></i></button>
+      <button class="dpad-btn big" onclick="breakoutMove('right')"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <!-- CONNECT FOUR -->
+  <div class="game-screen" id="game-connect4">
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()"><i class="fas fa-arrow-left"></i><span>Back</span></button>
+      <div class="game-title"><span class="game-title-icon">⚫</span><span>CONNECT FOUR</span></div>
+      <div class="game-stats">
+        <div class="stat-box"><span class="stat-label">WINS</span><span class="stat-value" id="c4-wins">0</span></div>
+        <div class="stat-box"><span class="stat-label">LOSSES</span><span class="stat-value" id="c4-losses">0</span></div>
+      </div>
+    </div>
+    <div class="c4-wrap">
+      <div class="c4-status" id="c4Status">Your Turn (Red)</div>
+      <div class="c4-board" id="c4Board"></div>
+    </div>
+    <div class="game-controls">
+      <button class="ctrl-btn big" onclick="c4Restart()"><i class="fas fa-redo"></i> New Game</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="goHome()"><i class="fas fa-home"></i><span>Home</span></button>
+  <button class="nav-btn" onclick="showStats()"><i class="fas fa-chart-bar"></i><span>Stats</span></button>
+  <button class="nav-btn" onclick="showProfile()"><i class="fas fa-user"></i><span>Profile</span></button>
+</nav>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<script src="main.js"></script>
+<script src="games.js"></script>
+</body>
+</html>
